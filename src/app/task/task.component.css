@@ -1,0 +1,28 @@
+.card {
+  padding: 10px;
+  border: 1px solid grey;
+  border-radius: 4px;
+}
+
+.done-message {
+  font-weight: 600;
+  color: green;
+}
+
+.task-done {
+  color: darkgrey;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.controls {
+  display: flex;
+  margin-top: 30px;
+}
+
+button {
+  margin-right: 20px;
+}

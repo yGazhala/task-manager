@@ -1,0 +1,7 @@
+.page {
+  display: flex;
+  justify-content: center;
+}
+.page-content {
+  width: 400px;
+}

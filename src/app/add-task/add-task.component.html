@@ -1,0 +1,88 @@
+<p>
+  <a [routerLink]="''">На головну</a>
+</p>
+
+<h2>Додати завдання</h2>
+
+<p>
+  <label>
+    <span class="input-label">Тип завдання</span>
+    <select class="input-field" [(ngModel)]="selectedTaskCategory">
+      <option value="workingTask">Робоче завдання</option>
+      <option value="selfLearningTask">Навчальне завдання</option>
+    </select>
+  </label>
+</p>
+
+@if (selectedTaskCategory == 'workingTask') {
+  <h3>Робоче завдання:</h3>
+
+  <p>
+    <label>
+      <span class="input-label">Назва</span>
+      <input class="input-field" type="text" [(ngModel)]="workingTaskForm.title">
+    </label>
+  </p>
+
+  <p>
+    <label class="description">
+      <span class="input-label">Опис</span>
+      <textarea class="input-field" type="text" [(ngModel)]="workingTaskForm.description"></textarea>
+    </label>
+  </p>
+
+  <p>
+    <label>
+      <span class="input-label">Проєкт</span>
+      <input class="input-field" type="text" [(ngModel)]="workingTaskForm.projectName">
+    </label>
+  </p>
+
+  <p>
+    <label>
+      <span class="input-label">Контактна особа</span>
+      <input class="input-field" type="text" [(ngModel)]="workingTaskForm.projectContactFullName">
+    </label>
+  </p>
+
+  <p>
+    <label>
+      <span class="input-label">Виконати до:</span>
+      <input class="input-field" type="date" [(ngModel)]="workingTaskForm.dateToComplete">
+    </label>
+  </p>
+
+} @else {
+
+  <h3>Навчальне навчання:</h3>
+
+  <p>
+    <label>
+      <span class="input-label">Назва</span>
+      <input class="input-field" type="text" [(ngModel)]="learningTaskForm.title">
+    </label>
+  </p>
+  
+  <p>
+    <label class="description">
+      <span class="input-label">Опис</span>
+      <textarea class="input-field" type="text" [(ngModel)]="learningTaskForm.description"></textarea>
+    </label>
+  </p>
+  
+  <p>
+    <label>
+      <span class="input-label">Тема</span>
+      <input class="input-field" type="text" [(ngModel)]="learningTaskForm.topic">
+    </label>
+  </p>
+  
+  <p>
+    <label>
+      <span class="input-label">Посилання</span>
+      <input class="input-field" type="text" [(ngModel)]="learningTaskForm.linkURL">
+    </label>
+  </p>
+}
+
+<button (click)="onSave()">Додати</button>

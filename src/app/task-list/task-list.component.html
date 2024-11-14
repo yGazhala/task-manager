@@ -1,0 +1,12 @@
+<h2>Менеджер завдань</h2>
+
+<div class="top-bar">
+  <input type="text" class="search" placeholder="Пошук" (input)="onSearchInputChanged($event)">
+  <button (click)="onAddTask()">Додати</button>
+</div>
+
+@for (item of list.searchedItems; track item.id) {
+  <app-task class="task" [task]="item" (remove)="onRemoveTask($event)"></app-task>
+} @empty {
+  <h4>Завдань не знайдено</h4>
+}

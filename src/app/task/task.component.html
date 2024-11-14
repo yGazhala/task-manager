@@ -1,0 +1,23 @@
+<div class="card">
+  @if (task.isDone()) {
+    <p class="done-message">Виконано</p>
+  }
+
+  <div [class]="{'task-done': task.isDone()}">
+    <div class="title">{{task.title}}</div>
+    <p>{{task.description}}</p>
+    <div [innerHTML]="task.getDetailsHTML()"></div>
+  </div>  
+
+  <div class="controls">
+    <button (click)="task.toggleDetails()">
+      {{task.isDetailsShown() ? 'Згорнути' : 'Детальніше'}}  
+    </button>
+
+    @if (!task.isDone()) {
+      <button (click)="task.markAsDone()">Завершити</button>
+    }
+
+    <button (click)="onRemove()">Видалити</button>
+  </div>
+</div>
