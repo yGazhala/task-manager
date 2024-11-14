@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from "@angular/router";
 import { FormsModule } from "@angular/forms";
 
-import { TaskListService } from '../services/task-list.service';
-import { AddSelfLearningTaskForm, AddTaskForm, AddWorkingTaskForm } from '../models/add-task-form';
-import { TaskCategory } from '../models/task';
+import { TaskListService } from '../../services/task-list.service';
+import { AddSelfLearningTaskForm, AddTaskForm, AddWorkingTaskForm } from '../../models/add-task-form';
+import { TaskCategory } from '../../models/task';
 
 @Component({
   selector: 'app-add-task',

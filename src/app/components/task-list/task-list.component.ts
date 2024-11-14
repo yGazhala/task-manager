@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule } from "@angular/router";
 import { TaskComponent } from "../task/task.component";
-import { TaskListService } from "../services/task-list.service";
+import { TaskListService } from "../../services/task-list.service";
 
 @Component({
   selector: 'app-task-list',
@@ -11,7 +11,7 @@ import { TaskListService } from "../services/task-list.service";
   styleUrl: './task-list.component.css'
 })
 export class TaskListComponent {
-  // Еземпляри класів TaskListService та Router впроваджується 
+  // Еземпляри класів TaskListService та Router впроваджується
   // за допомогою механізму впровадження залежностей в Angular
   constructor(
     public list: TaskListService,

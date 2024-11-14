@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { BaseTask } from '../models/task';
+import { BaseTask } from '../../models/task';
 
 @Component({
   selector: 'app-task',
@@ -17,7 +17,7 @@ export class TaskComponent {
 
   constructor() {}
 
-  // Метод викликається при натисканні на кнопку видалення 
+  // Метод викликається при натисканні на кнопку видалення
   public onRemove(): void {
     this.remove.emit(this.task.id);
   }
