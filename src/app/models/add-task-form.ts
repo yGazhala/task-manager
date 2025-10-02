@@ -1,10 +1,12 @@
-import { SelfLearningTaskData, TaskCategory, WorkingTaskData } from './task';
+import { TaskCategory } from './task-category';
+import { TaskData, LearningTaskData, WorkingTaskData } from './task-data';
 
 export abstract class AddTaskForm {
   public abstract category: TaskCategory;
   public abstract title: string;
 
-  public abstract getTaskDataJSON(): string;
+  public abstract isValid(): boolean;
+  public abstract getData(): TaskData;
 
   protected generateItemId(): string {
     // Генерує випадковий ідентифікатор, наприклад: '875329650230'
@@ -13,33 +15,39 @@ export abstract class AddTaskForm {
 }
 
 export class AddWorkingTaskForm extends AddTaskForm {
-    public category: TaskCategory = 'workingTask'
-    public title = '';
-    public description = '';
-    public projectName = '';
-    public projectContactFullName = '';
-    public dateToComplete?: string; // YYYY-MM-DD
-  
-    constructor() {
-      super();
-    }
-  
-    public getTaskDataJSON(): string {
-      let taskData: WorkingTaskData = {
-        id: this.generateItemId(),
-        category: this.category,
-        title: this.title,
-        description: this.description,
-        projectName: this.projectName,
-        projectContactFullName: this.projectContactFullName,
-        dateToComplete: this.dateToComplete,
-      };
-      return JSON.stringify(taskData);
-    }
+  public category: TaskCategory = 'workingTask'
+  public title = '';
+  public description = '';
+  public projectName = '';
+  public projectContactFullName = '';
+  public dateToComplete?: string; // YYYY-MM-DD
+
+  constructor() {
+    super();
   }
-  
-export class AddSelfLearningTaskForm extends AddTaskForm {
-  public category: TaskCategory = 'selfLearningTask';
+
+  public isValid(): boolean {
+    return this.title.trim().length > 0 &&
+      this.description.trim().length > 0 &&
+      this.projectName.trim().length > 0 &&
+      this.projectContactFullName.trim().length > 0;
+  }
+
+  public getData(): WorkingTaskData {
+    return {
+      id: this.generateItemId(),
+      category: this.category,
+      title: this.title.trim(),
+      description: this.description.trim(),
+      projectName: this.projectName.trim(),
+      projectContactFullName: this.projectContactFullName.trim(),
+      dateToComplete: this.dateToComplete,
+    };
+  }
+}
+
+export class AddLearningTaskForm extends AddTaskForm {
+  public category: TaskCategory = 'learningTask';
   public title = '';
   public description = '';
   public topic = '';
@@ -49,15 +57,19 @@ export class AddSelfLearningTaskForm extends AddTaskForm {
     super();
   }
 
-  public getTaskDataJSON(): string {
-    let taskData: SelfLearningTaskData = {
+  public isValid(): boolean {
+    return this.title.trim().length > 0 &&
+      this.topic.trim().length > 0;
+  }
+
+  public getData(): LearningTaskData {
+    return {
       id: this.generateItemId(),
       category: this.category,
-      title: this.title,
-      description: this.description,
-      topic: this.topic,
-      linkURL: this.linkURL,
+      title: this.title.trim(),
+      description: this.description.trim(),
+      topic: this.topic.trim(),
+      linkURL: this.linkURL.trim(),
     };
-    return JSON.stringify(taskData);
   }
 }

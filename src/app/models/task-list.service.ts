@@ -1,18 +1,10 @@
-// Імпортуємо класи і типи створені в попередній лабораторній роботі
-import {
-  TaskCategory, BaseTask, WorkingTask, WorkingTaskData,
-  SelfLearningTask, SelfLearningTaskData
-} from '../models/task';
+// Імпортуємо класи і типи
+import { BaseTask, LearningTask, WorkingTask}  from './task';
+import { LearningTaskData, TaskData, WorkingTaskData } from './task-data';
+import { TaskListStorageService } from './task-list-storage.service';
 
 // Імпортуємо Angular декоратор
 import { Injectable } from '@angular/core';
-
-// Тип обʼєкту, що містить дані елементу списку для зберігання в сховищі
-type TaskDataInStorage = {
-  category: TaskCategory;
-  // WorkingTaskData або LearningTaskData
-  taskDataJSON: string;
-}
 
 // Додаємо Angular декоратор, що  визначає цей клас як Angular сервіс
 // для механізму впровадження залежностей
@@ -22,27 +14,25 @@ export class TaskListService {
 
   private items: BaseTask[];
   private currentSearchTerm: string = '';
-  private storageKey = 'taskList';
 
-  constructor() {
+
+  constructor(private storageService: TaskListStorageService) {
     this.items = [];
-    this.searchedItems = this.items;
 
     // Заповнюємо масив items даними зі сховища
-    const listDataInStorageJSON: string = localStorage.getItem(this.storageKey);
-    if (listDataInStorageJSON) {
-      let tasksInStorage: TaskDataInStorage[] = JSON.parse(listDataInStorageJSON);
-      for (let i = 0; i < tasksInStorage.length; i++) {
-        const taskData = tasksInStorage[i];
-        let task: BaseTask;
-        if (taskData.category === 'workingTask') {
-          task = new WorkingTask(taskData.taskDataJSON);
-        } else {
-          task = new SelfLearningTask(taskData.taskDataJSON);
-        }
-        this.items.push(task);
+    const listData: TaskData[] = this.storageService.getListData();
+    listData.forEach((taskData: TaskData) => {
+      let task: BaseTask;
+      if (taskData.category === 'workingTask') {
+        task = new WorkingTask(taskData as WorkingTaskData);
+      } else {
+        task = new LearningTask(taskData as LearningTaskData);
       }
-    }
+      this.items.push(task);
+    });
+
+    // Відображаємо всі елементи за замовчуванням
+    this.searchedItems = this.items;
   }
 
   public search(searchTerm: string): void {
@@ -59,15 +49,13 @@ export class TaskListService {
     }
   }
 
-  public addItem(taskDataJSON: string): void {
-    const taskData: WorkingTaskData | SelfLearningTaskData = JSON.parse(taskDataJSON);
-
+  public addItem(taskData: TaskData): void {
     // Додаємо завдання до списку
     let task: BaseTask;
     if (taskData.category === 'workingTask') {
-      task = new WorkingTask(taskDataJSON);
+      task = new WorkingTask(taskData as WorkingTaskData);
     } else {
-      task = new SelfLearningTask(taskDataJSON);
+      task = new LearningTask(taskData as LearningTaskData);
     }
     this.items.push(task);
 
@@ -85,19 +73,8 @@ export class TaskListService {
   }
 
   private saveListDataToStorage(): void {
-    const tasksInStorage: TaskDataInStorage[] = [];
-    for (let i = 0; i < this.items.length; i++) {
-      const task = this.items[i];
-      const taskData: TaskDataInStorage = {
-        category: task.category,
-        taskDataJSON: task.toJSON()
-      }
-      tasksInStorage.push(taskData);
-    }
-
-    const tasksInStorageJSON = JSON.stringify(tasksInStorage);
-    localStorage.setItem(this.storageKey, tasksInStorageJSON);
+    // Отримуємо дані кожного елемента списку та зберігаємо їх в новий масив
+    const listData: TaskData[] = this.items.map((item: BaseTask) => item.getData());
+    this.storageService.setListData(listData);
   }
 }
-
-
