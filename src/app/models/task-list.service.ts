@@ -6,7 +6,7 @@ import { TaskListStorageService } from './task-list-storage.service';
 // Імпортуємо Angular декоратор
 import { Injectable } from '@angular/core';
 
-// Додаємо Angular декоратор, що  визначає цей клас як Angular сервіс
+// Додаємо @Injectable Angular декоратор, що  визначає цей клас як Angular сервіс
 // для механізму впровадження залежностей
 @Injectable({ providedIn: 'root' })
 export class TaskListService {

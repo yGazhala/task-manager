@@ -1,5 +1,4 @@
-import { TaskCategory } from './task-category';
-import { TaskData, LearningTaskData, WorkingTaskData } from './task-data';
+import { TaskCategory, TaskData, LearningTaskData, WorkingTaskData } from './task-data';
 
 export abstract class AddTaskForm {
   public abstract category: TaskCategory;

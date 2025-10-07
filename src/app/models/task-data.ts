@@ -1,4 +1,5 @@
-import { TaskCategory } from './task-category';
+// Оголошуємо тип для опису категорій завдань (базових обʼєктів додатку)
+export type TaskCategory = 'learningTask' | 'workingTask';
 
 // Базовий тип обʼєкта, який описує спільні властивості завдання
 export type TaskData = {

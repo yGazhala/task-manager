@@ -1,6 +1,8 @@
-import { TaskCategory } from './task-category';
-import { TaskData, LearningTaskData, WorkingTaskData } from './task-data';
+import { TaskCategory, TaskData, LearningTaskData, WorkingTaskData } from './task-data';
 
+// Оголосимо інтерфейс Searchable. 
+// Клас, що імплементує цей інтерфейс має підтримувати 
+// атрибут searchIndex для реалізації функції пошуку.
 interface Searchable {
   searchIndex: string;
 }
@@ -10,6 +12,7 @@ export abstract class BaseTask implements Searchable {
   public title: string;
   public searchIndex: string;
 
+  // Абстрактні атрибути і методи мають бути реалізовані в класах-нащадках
   public abstract category: TaskCategory;
   public abstract description?: string;
 
@@ -22,6 +25,7 @@ export abstract class BaseTask implements Searchable {
   constructor(taskData: TaskData) {
     this.title = taskData.title;
     this.id = taskData.id;
+    // Ініціалізуємо атрибут searchIndex для реалізації інтейрфейсу Searchable
     this.searchIndex = taskData.title.toLowerCase();
   }
 
@@ -63,6 +67,7 @@ export class WorkingTask extends BaseTask {
   private dateToComplete?: string; // YYYY-MM-DD
 
   constructor(taskData: WorkingTaskData) {
+    // викликаємо конструктор батьківського класу BaseTask
     super(taskData);
     this.description = taskData.description;
     this.projectName = taskData.projectName;
@@ -70,7 +75,7 @@ export class WorkingTask extends BaseTask {
     this.dateToComplete = taskData.dateToComplete;
   }
 
-  public override showDetails() {
+  public showDetails(): void {
     this.detailsHTML = `
       <p>Категорія: робоче завдання</p>
       <p>Проєкт: ${this.projectName}</p>
@@ -79,7 +84,7 @@ export class WorkingTask extends BaseTask {
     `;
   }
 
-  public override getData(): WorkingTaskData {
+  public getData(): WorkingTaskData {
     return {
       id: this.id,
       title: this.title,
@@ -106,7 +111,7 @@ export class LearningTask extends BaseTask {
     this.linkURL = taskData.linkURL;
   }
 
-  public showDetails() {
+  public showDetails(): void {
     let details = `
       <p>Категорія: навчальне завдання</p>
       <p>Тема: ${this.topic}</p>
