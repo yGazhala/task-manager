@@ -1,8 +1,7 @@
+// Імпортуємо типи, створені в попередніх лабораторних роботах 
 import { TaskCategory, TaskData, LearningTaskData, WorkingTaskData } from './task-data';
 
-// Оголосимо інтерфейс Searchable. 
-// Клас, що імплементує цей інтерфейс має підтримувати 
-// атрибут searchIndex для реалізації функції пошуку.
+// Оголосимо інтерфейс Searchable 
 interface Searchable {
   searchIndex: string;
 }
