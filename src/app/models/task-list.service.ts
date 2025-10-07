@@ -15,7 +15,6 @@ export class TaskListService {
   private items: BaseTask[];
   private currentSearchTerm: string = '';
 
-
   constructor(private storageService: TaskListStorageService) {
     this.items = [];
 

@@ -6,18 +6,24 @@ interface Searchable {
 }
 
 export abstract class BaseTask implements Searchable {
-  public abstract title: string;
+  public id: string;
+  public title: string;
+  public searchIndex: string;
+
   public abstract category: TaskCategory;
   public abstract description?: string;
-
-  public abstract id: string;
-  public abstract searchIndex: string;
 
   public abstract showDetails(): void;
   public abstract getData(): TaskData;
 
   protected detailsHTML: string = '';
   private isCompleted: boolean = false;
+
+  constructor(taskData: TaskData) {
+    this.title = taskData.title;
+    this.id = taskData.id;
+    this.searchIndex = taskData.title.toLowerCase();
+  }
 
   public getDetailsHTML(): string {
     return this.detailsHTML;
@@ -49,25 +55,19 @@ export abstract class BaseTask implements Searchable {
 }
 
 export class WorkingTask extends BaseTask {
-  public title: string;
   public category: TaskCategory = 'workingTask';
   public description: string;
-  public id: string;
-  public searchIndex: string;
 
   private projectName: string;
   private projectContactFullName: string;
   private dateToComplete?: string; // YYYY-MM-DD
 
   constructor(taskData: WorkingTaskData) {
-    super();
-    this.title = taskData.title;
+    super(taskData);
     this.description = taskData.description;
-    this.id = taskData.id;
     this.projectName = taskData.projectName;
     this.projectContactFullName = taskData.projectContactFullName;
     this.dateToComplete = taskData.dateToComplete;
-    this.searchIndex = `${taskData.title.toLowerCase()} ${taskData.description.toLowerCase()}`;
   }
 
   public override showDetails() {
@@ -93,23 +93,17 @@ export class WorkingTask extends BaseTask {
 }
 
 export class LearningTask extends BaseTask {
-  public title: string;
   public category: TaskCategory = 'learningTask';
   public description?: string;
-  public id: string;
-  public searchIndex: string;
 
   private topic: string;
   private linkURL?: string;
 
   constructor(taskData: LearningTaskData) {
-    super();
-    this.id = taskData.id;
-    this.title = taskData.title;
+    super(taskData);
     this.description = taskData.description;
     this.topic = taskData.topic;
     this.linkURL = taskData.linkURL;
-    this.searchIndex = `${taskData.title.toLowerCase()} ${taskData.description.toLowerCase()}`;
   }
 
   public showDetails() {
