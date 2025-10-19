@@ -1,13 +1,9 @@
 import { TaskData } from './task-data';
 import { Injectable } from '@angular/core';
 
-// Додаємо @Injectable Angular декоратор, що  визначає цей клас як Angular сервіс
-// для механізму впровадження залежностей
 @Injectable({ providedIn: 'root' })
 export class TaskListStorageService {
   private localStorageKey = 'taskList';
-
-  constructor() {}
 
   public setListData(listData: TaskData[]): void {
     const listDataJSON: string = JSON.stringify(listData);

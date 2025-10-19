@@ -18,6 +18,6 @@
       <button (click)="task.markAsDone()">Завершити</button>
     }
 
-    <button (click)="onRemove()">Видалити</button>
+    <button (click)="remove.emit(task.id)">Видалити</button>
   </div>
 </div>

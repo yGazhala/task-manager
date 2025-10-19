@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule } from "@angular/router";
 import { TaskComponent } from "../task/task.component";
-import { TaskListService } from "../../services/task-list.service";
+import { TaskListService } from "../../models/task-list.service";
 
 @Component({
   selector: 'app-task-list',
@@ -19,12 +19,12 @@ export class TaskListComponent {
   ) {}
 
   // Викликається при натисканні на кнопку "Додати"
-  public onAddTask(): void {
+  public goToAddTaskPage(): void {
     this.router.navigate(['/add']);
   }
 
   // Викликається при надходженні події від дочірнього компонента
-  public onRemoveTask(itemId: string): void {
+  public removeTask(itemId: string): void {
     const isConfirmed = confirm('Будь ласка, підтвердіть видалення завдання');
     if (isConfirmed) {
       this.list.removeItem(itemId);

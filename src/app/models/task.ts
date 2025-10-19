@@ -1,7 +1,5 @@
-// Імпортуємо типи, створені в попередніх лабораторних роботах 
 import { TaskCategory, TaskData, LearningTaskData, WorkingTaskData } from './task-data';
 
-// Оголосимо інтерфейс Searchable 
 interface Searchable {
   searchIndex: string;
 }

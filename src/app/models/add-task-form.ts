@@ -8,8 +8,10 @@ export abstract class AddTaskForm {
   public abstract getData(): TaskData;
 
   protected generateItemId(): string {
-    // Генерує випадковий ідентифікатор, наприклад: '875329650230'
-    return Math.floor(Math.random() * Date.now()).toString();
+    const currentTimestamp: number = Date.now();
+    const randomNumber: number = Math.random();
+    const integer: number = Math.floor(currentTimestamp * randomNumber);
+    return String(integer);
   }
 }
 

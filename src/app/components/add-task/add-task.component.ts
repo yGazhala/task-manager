@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from "@angular/router";
 import { FormsModule } from "@angular/forms";
 
-import { TaskListService } from '../../services/task-list.service';
+import { TaskListService } from '../../models/task-list.service';
 import { AddLearningTaskForm, AddTaskForm, AddWorkingTaskForm } from '../../models/add-task-form';
-import { TaskCategory } from '../../models/task';
+import { TaskCategory, TaskData } from '../../models/task-data';
 
 @Component({
   selector: 'app-add-task',
@@ -18,7 +18,7 @@ export class AddTaskComponent implements OnInit {
   public selectedTaskCategory: TaskCategory = 'workingTask';
 
   public workingTaskForm: AddWorkingTaskForm;
-  public learningTaskForm: AddSelfLearningTaskForm;
+  public learningTaskForm: AddLearningTaskForm;
 
   // Еземпляр класу TaskListService впроваджується за допомогою механізму впровадження залежностей в Angular
   constructor(private list: TaskListService, private router: Router) {}
@@ -26,14 +26,14 @@ export class AddTaskComponent implements OnInit {
   public ngOnInit() {
     // Ініціалізуємо обʼекти-екземпляри форм
     this.workingTaskForm = new AddWorkingTaskForm();
-    this.learningTaskForm = new AddSelfLearningTaskForm();
+    this.learningTaskForm = new AddLearningTaskForm();
   }
 
   // Викликається, коли користувач натискає кнопку збереження на формі
-  public onSave(): void {
+  public save(): void {
     const currentForm = this.getCurrentForm();
-    const taskDataJSON: string = currentForm.getTaskDataJSON();
-    this.list.addItem(taskDataJSON);
+    const taskData: TaskData = currentForm.getData();
+    this.list.addItem(taskData);
     this.router.navigate(['/']);
   }
 

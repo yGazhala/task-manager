@@ -14,12 +14,4 @@ export class TaskComponent {
 
   // Подія, що емітується до батьківського компонента
   @Output() public remove = new EventEmitter<string>();
-
-  constructor() {}
-
-  // Метод викликається при натисканні на кнопку видалення
-  public onRemove(): void {
-    this.remove.emit(this.task.id);
-  }
-
 }
